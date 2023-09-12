@@ -1,34 +1,53 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Stephan D Ramalho Portfolio
+
+![image](https://i.imgur.com/ToRBcz1.jpg)
+
+---
+
+## **_Description_**
+
+### A portfolio of my Software Engineering projects
+
+### Built Using Next.js, Tailwindcss
+
+---
+
+This is a rework of my previous portfolio project using TypeScript and Bun
+[OldPortfolio](https://github.com/sramalho94/portfolio_2023)
 
 ## Getting Started
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+- `clone` the github repository
+- `cd` into the root of the directory
+- run `bun install` to install packages
+- run `bun run dev` to run the application
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Getting started with docker
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- run `docker pull sramalho94/sdrportfolio:latest`
+- run `docker run -p 3000:3000 --name sdrportfolio sramalho94/sdrportfolio:latest`
+- got to http://localhost:3000 to see the application
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+---
 
-## Learn More
+### **_*Technologies Used*_**
 
-To learn more about Next.js, take a look at the following resources:
+- Next.js
+- Tailwindcss
+- Docker
+- Bun
+- TypeScript
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Links
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### [LinkedIn](http://www.linkedin.com/in/stephan-ramalho)
 
-## Deploy on Vercel
+### [Dockerhub](https://hub.docker.com/r/sramalho94/sdrportfolio)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### **_Acknowledgements_**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- First and foremost, I would like to express my sincerest gratitude to the recruiters, professionals, and peers who are taking the time to review my portfolio. Your consideration and feedback are invaluable as I continue to grow and refine my skills in the software engineering field.
+- I am deeply grateful to the numerous software engineers who have generously shared their knowledge, expertise, and encouragement throughout my journey. Their guidance and collaboration have been instrumental in honing my skills and fostering a passion for learning and innovation.
+- Lastly, I extend my heartfelt thanks to the creators and contributors of Next.js and TailwindCSS. Their dedication to developing and maintaining these robust, performance-oriented frameworks has provided the software engineering community with versatile tools that empower developers to build scalable, modular, and visually appealing web applications.
