@@ -29,7 +29,7 @@ import { useState, useRef } from 'react'
 import Project from '@/components/Project'
 import projects from '../projectData'
 import EmailForm from '@/components/EmailForm'
-
+import Navbar from '@/components/Navbar'
 export default function Home() {
   const [darkMode, setDarkMode] = useState<boolean>(false)
 
@@ -64,37 +64,13 @@ export default function Home() {
     <div className={darkMode ? 'dark' : ''}>
       <main className="bg-purple-200 px-10 md:px-20 lg:px-40 dark:bg-gray-900">
         {/* Nav Section */}
-        <header className=" flex flex-row justify-center mx-auto bg-emerald-200 fixed top-0 inset-x-0 z-50">
-          <ul className="flex flex-row">
-            <li>
-              <a
-                href="#"
-                className="mr-10 font-bold text-purple-500 hover:underline"
-                onClick={(event) => handleClickScroll(event, targetRef1)}
-              >
-                About Me
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="mr-10 font-bold text-purple-500 hover:underline"
-                onClick={(event) => handleClickScroll(event, targetRef2)}
-              >
-                My Skills
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="mr-10 font-bold text-purple-500 hover:underline"
-                onClick={(event) => handleClickScroll(event, targetRef3)}
-              >
-                Portfolio
-              </a>
-            </li>
-          </ul>
-        </header>
+        <Navbar
+          handleClickScroll={handleClickScroll}
+          darkMode={darkMode}
+          ref1={targetRef1}
+          ref2={targetRef2}
+          ref3={targetRef3}
+        />
 
         {/* Header Section */}
         <section className="mb-20 ">
