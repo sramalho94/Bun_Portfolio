@@ -34,6 +34,7 @@ import SkillsSection from '@/components/SkillsSection'
 import Portfolio from '@/components/Portfolio'
 import Footer from '@/components/Footer'
 import HeaderSection from '@/components/HeaderSection'
+import AboutMe from '@/components/AboutMe'
 export default function Home() {
   const [darkMode, setDarkMode] = useState<boolean>(false)
 
@@ -82,7 +83,7 @@ export default function Home() {
           <HeaderSection setDarkMode={setDarkMode} darkMode={darkMode} />
 
           {/* About Me */}
-          <div
+          {/* <div
             className="text-center mb-10  flex flex-col mx-auto min-w-screen max-w-screen justify-center md:flex-row md:space-x-5 md:p-5"
             ref={targetRef1}
           >
@@ -144,7 +145,14 @@ export default function Home() {
             <div className="email-form-container w-1/3 flex flex-row justify-center mx-auto">
               <EmailForm darkMode={darkMode} />
             </div>
-          )}
+          )} */}
+          <div ref={targetRef1}>
+            <AboutMe
+              showEmailForm={showEmailForm}
+              toggleEmailForm={toggleEmailForm}
+              darkMode={darkMode}
+            />
+          </div>
         </section>
 
         {/* Skills Section */}
