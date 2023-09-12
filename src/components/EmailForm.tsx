@@ -29,8 +29,8 @@ const EmailForm: React.FC<EmailFormProps> = ({ darkMode }) => {
 
     const msg = {
       to: 'stephanramalho@gmail.com',
-      from: formData.email,
-      subject: `New message from ${formData.name}`,
+      from: 'stephanramalho@gmail.com',
+      subject: `New message from ${formData.name}, at ${formData.email}`,
       text: formData.message
     }
 
@@ -52,11 +52,11 @@ const EmailForm: React.FC<EmailFormProps> = ({ darkMode }) => {
 
   return (
     <div
-      className={`flex items-center m-3 ${
+      className={` relative  flex flex-1 mr-14 items-center  ${
         darkMode ? 'dark' : ''
-      } bg-emerald-200 p-3 rounded-xl shadow-xl dark:bg-emerald-500 dark:bg-gradient-to-r from-teal-500`}
+      } bg-emerald-200 p-3 rounded-xl shadow-xl dark:bg-emerald-500 dark:bg-gradient-to-r from-teal-500 md:mr-0 md:w-[200px]`}
     >
-      <form onSubmit={handleSubmit} className="w-full ">
+      <form onSubmit={handleSubmit} className="w-full">
         <div className="mb-4">
           <label
             htmlFor="name"
