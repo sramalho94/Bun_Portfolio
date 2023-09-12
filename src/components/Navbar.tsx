@@ -1,12 +1,12 @@
 import React from 'react'
 
 interface NavbarProps {
-  ref1: HTMLDivElement | null
-  ref2: HTMLDivElement | null
-  ref3: HTMLDivElement | null
+  ref1: React.RefObject<HTMLDivElement>
+  ref2: React.RefObject<HTMLDivElement>
+  ref3: React.RefObject<HTMLDivElement>
   handleClickScroll: (
     event: React.MouseEvent,
-    ref: HTMLDivElement | null
+    ref: React.RefObject<HTMLDivElement> | null
   ) => void
   darkMode: boolean
 }
