@@ -49,7 +49,12 @@ const Project: React.FC<ProjectProps> = ({
   return (
     <div className="bg-purple-400  bg-gradient-to-tr from-emerald-200 flex flex-col justify-center align-middle  rounded-xl mx-2 my-2 dark:bg-black">
       <div className="relative h-72 w-full flex flex-row justify-center">
-        <Image src={image} className="rounded-lg shadow-xl" alt={`${name}`} />
+        <Image
+          src={image}
+          className="rounded-lg shadow-xl"
+          alt={`${name}`}
+          fill
+        />
       </div>
       <h3 className="text-xl font-bold pt-8 pb-2 text-center dark:text-white">
         {name}
