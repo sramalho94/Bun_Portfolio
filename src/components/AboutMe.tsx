@@ -18,7 +18,7 @@ const AboutMe = ({ showEmailForm, toggleEmailForm, darkMode }: Props) => {
           <Image
             src={pictureOfMe}
             fill={true}
-            cover="true"
+            objectFit="cover"
             alt="profile_pic"
             className="rounded-sm"
           />
