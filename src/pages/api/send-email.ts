@@ -2,7 +2,9 @@
 import sgMail, { MailDataRequired } from '@sendgrid/mail'
 import { NextApiRequest, NextApiResponse } from 'next'
 
-sgMail.setApiKey(process.env.SENDGRID_API_KEY!)
+const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY
+
+sgMail.setApiKey(SENDGRID_API_KEY!)
 
 export default async function handler(
   req: NextApiRequest,
