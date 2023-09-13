@@ -12,8 +12,9 @@
 
 ---
 
-This is a rework of my previous portfolio project using TypeScript and Bun
-[OldPortfolio](https://github.com/sramalho94/portfolio_2023)
+### This is a rework of my previous portfolio project using TypeScript and Bun
+
+- [OldPortfolio](https://github.com/sramalho94/portfolio_2023)
 
 ## Getting Started
 
