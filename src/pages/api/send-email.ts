@@ -6,6 +6,10 @@ const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY
 
 console.log('SENDGRID_API_KEY:', SENDGRID_API_KEY)
 
+if (!SENDGRID_API_KEY) {
+  console.error('SENDGRID_API_KEY is not set in environment variables')
+}
+
 sgMail.setApiKey(SENDGRID_API_KEY!)
 
 export default async function handler(
