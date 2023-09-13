@@ -8,7 +8,7 @@ const Footer = () => {
         <li className="flex flex-row align-middle justify-center text-purple-600 hover:scale-125 transition-all duration-300">
           <SiGithub className="font-bold my-auto" />
           <a
-            href="https://github.com/sramalho94/portfolio_2023"
+            href="https://github.com/sramalho94/Bun_Portfolio"
             className="font-bold"
             target="_blank"
             rel="noopener noreferrer"
