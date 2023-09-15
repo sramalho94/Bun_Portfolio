@@ -21,6 +21,7 @@ const AboutMe = ({ showEmailForm, toggleEmailForm, darkMode }: Props) => {
           initial={{ x: -200, opacity: 0 }}
           viewport={{ once: true }}
           whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 2 }}
         >
           <Image
             src={pictureOfMe}
@@ -36,6 +37,7 @@ const AboutMe = ({ showEmailForm, toggleEmailForm, darkMode }: Props) => {
         initial={{ x: 200, opacity: 0 }}
         viewport={{ once: true }}
         whileInView={{ opacity: 1, x: 0 }}
+        transition={{ duration: 2 }}
       >
         <h2 className="text-5xl py-2 text-purple-600 font-medium md:text-6xl">
           Stephan D. Ramalho

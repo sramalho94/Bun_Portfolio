@@ -1,5 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
+import { motion } from 'framer-motion'
 import {
   SiTypescript,
   SiJavascript,
@@ -31,9 +32,12 @@ export default function SkillsSection({}: Props) {
           frequently updated.
         </p>
       </div>
-      <ul
-        className="flex flex-wrap  md:flex-row sm:w-screen  md:w-auto px-2 mx-5 py-5 align-middle rounded-lg justify-center shadow-2xl dark:text-white
-            "
+      <motion.ul
+        className="flex flex-wrap  md:flex-row sm:w-screen  md:w-auto px-2 mx-5 py-5 align-middle rounded-lg justify-center shadow-2xl dark:text-white"
+        initial={{ x: 200, opacity: 0 }}
+        viewport={{ once: true }}
+        whileInView={{ opacity: 1, x: 0 }}
+        transition={{ duration: 2 }}
       >
         <li className="flex flex-col justify-center px-3">
           <SiTypescript className="text-4xl text-center mx-auto" />
@@ -63,11 +67,17 @@ export default function SkillsSection({}: Props) {
           <SiSequelize className="text-4xl text-center mx-auto" />
           <p>SQL</p>
         </li>
-      </ul>
+      </motion.ul>
 
       {/* Front-end skills */}
       <div className="lg:flex gap-20 mx-0">
-        <div className="text-center shadow-lg p-10 rounded-xl my-10 flex-1 dark:bg-gradient-to-r from-teal-600">
+        <motion.div
+          className="text-center shadow-lg p-10 rounded-xl my-10 flex-1 dark:bg-gradient-to-r from-teal-600"
+          initial={{ x: -200, opacity: 0 }}
+          viewport={{ once: true }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 2 }}
+        >
           <Image
             src={design}
             width={100}
@@ -102,10 +112,16 @@ export default function SkillsSection({}: Props) {
               <p>Tailwind</p>
             </li>
           </ul>
-        </div>
+        </motion.div>
 
         {/* back-end skills */}
-        <div className="text-center shadow-lg p-10 rounded-xl my-10 flex-1 dark:bg-gradient-to-l from-teal-600">
+        <motion.div
+          className="text-center shadow-lg p-10 rounded-xl my-10 flex-1 dark:bg-gradient-to-l from-teal-600"
+          initial={{ x: 200, opacity: 0 }}
+          viewport={{ once: true }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 2 }}
+        >
           <Image
             id="wrong"
             src={code}
@@ -147,7 +163,7 @@ export default function SkillsSection({}: Props) {
               <p>Mongo</p>
             </li>
           </ul>
-        </div>
+        </motion.div>
       </div>
     </section>
   )
