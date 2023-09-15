@@ -27,7 +27,7 @@
 
 ### Getting started with docker
 
-- run `docker pull sramalho94/sdrportfolio:latest`
+- run `docker pull sramalho94/bun_portfolio:latest`
 - run `docker run -p 3000:3000 --name sdrportfolio sramalho94/sdrportfolio:latest`
 - got to http://localhost:3000 to see the application
 
@@ -45,7 +45,7 @@
 
 ### [LinkedIn](http://www.linkedin.com/in/stephan-ramalho)
 
-### [Dockerhub](https://hub.docker.com/r/sramalho94/sdrportfolio)
+### [Dockerhub](https://hub.docker.com/r/sramalho94/bun_portfolio)
 
 ### **_Acknowledgements_**
 
