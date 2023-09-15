@@ -4,6 +4,8 @@ import pictureOfMe from '../../public/pictureofme.jpg'
 import { AiOutlineMail, AiFillLinkedin } from 'react-icons/ai'
 import { SiGithub } from 'react-icons/si'
 import EmailForm from './EmailForm'
+import { motion } from 'framer-motion'
+
 type Props = {
   showEmailForm: boolean
   toggleEmailForm: () => void
@@ -14,7 +16,13 @@ const AboutMe = ({ showEmailForm, toggleEmailForm, darkMode }: Props) => {
   return (
     <div className="text-center mb-10  flex flex-col mx-auto min-w-screen max-w-screen justify-center md:flex-row md:space-x-5 md:p-5">
       <div className="flex flex-row justify-center">
-        <div className="relative bg-gradient-to-b from-teal-500 rounded-full w-80 h-80 overflow-hidden aspect-w-1 aspect-h-1 md:h-96 md:w-96 md:mt-20">
+        <motion.div
+          className="relative bg-gradient-to-b from-teal-500 rounded-full w-80 h-80 overflow-hidden aspect-w-1 aspect-h-1 md:h-96 md:w-96 md:mt-20"
+          initial={{ x: -200, opacity: 0 }}
+          viewport={{ once: true }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 2 }}
+        >
           <Image
             src={pictureOfMe}
             fill={true}
@@ -22,9 +30,15 @@ const AboutMe = ({ showEmailForm, toggleEmailForm, darkMode }: Props) => {
             alt="profile_pic"
             className="rounded-sm"
           />
-        </div>
+        </motion.div>
       </div>
-      <div className="flex flex-col md:ml-7">
+      <motion.div
+        className="flex flex-col md:ml-7"
+        initial={{ x: 200, opacity: 0 }}
+        viewport={{ once: true }}
+        whileInView={{ opacity: 1, x: 0 }}
+        transition={{ duration: 2 }}
+      >
         <h2 className="text-5xl py-2 text-purple-600 font-medium md:text-6xl">
           Stephan D. Ramalho
         </h2>
@@ -69,7 +83,7 @@ const AboutMe = ({ showEmailForm, toggleEmailForm, darkMode }: Props) => {
             <EmailForm darkMode={darkMode} />
           </div>
         )}
-      </div>
+      </motion.div>
     </div>
   )
 }
