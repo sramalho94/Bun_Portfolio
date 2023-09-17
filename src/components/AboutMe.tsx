@@ -1,6 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
-import pictureOfMe from '../../public/pictureofme.jpg'
+import pictureOfMe from '../../public/pictureOfMe.jpg'
 import { AiOutlineMail, AiFillLinkedin } from 'react-icons/ai'
 import { SiGithub } from 'react-icons/si'
 import EmailForm from './EmailForm'
