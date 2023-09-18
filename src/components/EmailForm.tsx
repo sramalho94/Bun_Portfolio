@@ -27,27 +27,14 @@ const EmailForm: React.FC<EmailFormProps> = ({ darkMode }) => {
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault()
 
-    const msg = {
-      to: 'stephanramalho@gmail.com',
-      from: 'stephanramalho@gmail.com',
-      subject: `New message from ${formData.name}, at ${formData.email}`,
-      text: formData.message
-    }
+    const subject = `New message from ${formData.name}, at ${formData.email}`
+    const body = formData.message
 
-    const response = await fetch('/api/send-email', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(msg)
-    })
+    const mailtoLink = `mailto:stephanramalho@gmail.com?subject=${encodeURIComponent(
+      subject
+    )}&body=${encodeURIComponent(body)}`
 
-    if (response.ok) {
-      alert('Email sent successfully!')
-    } else {
-      console.error(await response.json())
-      alert('Failed to send email.')
-    }
+    window.location.href = mailtoLink
   }
 
   return (
