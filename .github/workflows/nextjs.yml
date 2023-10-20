@@ -9,9 +9,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
-    env:
-      GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -30,19 +27,20 @@ jobs:
           git config --global user.email "sramalho@fordham.edu"
           git config --global user.name "Stephan D Ramalho"
 
-          git config --global pull.rebase false
-      
-      - name: Fetch and pull changes in GitHub Actions
+      - name: Create and Deploy to 'gh-pages' branch
         run: |
-          git fetch
-          git pull origin ${{ github.event.pull_request.head.ref }}
+          # Create and switch to the 'gh-pages' branch
+          git checkout -b gh-pages
 
-      - name: Build and Deploy to GitHub Pages
-        run: |
-          npm run build
-          npm run export
-          git checkout -B ${{ github.event.pull_request.head.ref }}
+          # Clear the contents of the 'gh-pages' branch
+          git rm -r .
+
+          # Copy the exported Next.js site files to the 'gh-pages' branch
           cp -r out/* .
+
+          # Add, commit, and push the changes to the 'gh-pages' branch
           git add .
           git commit -m "Deploy to GitHub Pages for PR: ${{ github.event.pull_request.number }}"
-          git push -u origin ${{ github.event.pull_request.head.ref }}
+          git push -u origin gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
