@@ -8,10 +8,11 @@ on:
 jobs:
   app_creation:
     runs-on: ubuntu-latest
-    outputs:
-      amplify_app_id: ${{ steps.create_app.outputs.amplify_app_id }}
 
     steps:
+      - name: Install jq
+        run: sudo apt-get -y install jq
+
       - name: Checkout code
         uses: actions/checkout@v2
 
@@ -42,9 +43,9 @@ jobs:
         id: create_app
         run: |
           app_name="${{ github.event.pull_request.head.ref }}"
-          amplifyAppArn=$(aws amplify create-app --name "$app_name" --output json --query 'App.Id')
-          amplify_app_id="${amplifyAppArn##*/}" # Extract the app ID from the ARN
-          echo "::set-output name=amplify_app_id::$amplify_app_id"
+          amplifyAppArn=$(aws amplify create-app --name "$app_name" --output json)
+          amplifyAppId=$(echo "$amplifyAppArn" | jq -r '.App.Id')
+          echo "::set-output name=amplify_app_id::$amplifyAppId"
         env:
           AWS_DEFAULT_REGION: us-east-1
 
