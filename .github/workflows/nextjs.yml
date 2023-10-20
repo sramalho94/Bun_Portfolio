@@ -6,13 +6,10 @@ on:
       - opened
 
 jobs:
-  environment_creation:
+  app_creation:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Install jq
-        run: sudo apt-get -y install jq
-
       - name: Checkout code
         uses: actions/checkout@v2
 
@@ -30,19 +27,6 @@ jobs:
           git config --global user.email "sramalho@fordham.edu"
           git config --global user.name "Stephan D Ramalho"
 
-      - name: Install and Configure Amplify CLI
-        run: |
-          # Install the Amplify CLI using Bun
-          bun add @aws-amplify/cli
-        
-          # Configure the AWS Amplify CLI
-          echo "y" | bun run amplify configure
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: us-east-1
-        
-
       - name: Configure AWS CLI
         run: |
           aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -52,11 +36,35 @@ jobs:
         env:
           AWS_DEFAULT_REGION: us-east-1
 
-      - name: Deploy to AWS Amplify
+      - name: Create AWS Amplify App
+        id: create_app
         run: |
-          amplifyAppArn="arn:aws:amplify:us-east-1:752004453275:apps/djvoqdmuchx4i"
-            branch_name="${{ github.event.pull_request.head.ref }}"
-            amplify publish
+          app_name="${{ github.event.pull_request.head.ref }}"
+          amplifyAppId=$(aws amplify create-app --name "$app_name" --output json --query 'App.Id' | tr -d '"')
+          echo "::set-output name=amplify_app_id::$amplifyAppId"
         env:
           AWS_DEFAULT_REGION: us-east-1
-        
+
+  environment_creation:
+    needs: app_creation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Configure AWS CLI
+        run: |
+          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws configure set default.region us-east-1
+          aws configure set default.output json
+        env:
+          AWS_DEFAULT_REGION: us-east-1
+
+      - name: Create AWS Amplify Environment
+        run: |
+          amplifyAppId="${{ steps.create_app.outputs.amplify_app_id }}"
+          branch_name="${{ github.event.pull_request.head.ref }}"
+          repo_url="https://github.com/sramalho94/Bun_Portfolio/$branch_name"
+          aws amplify create-branch --app-id "$amplifyAppId" --branch-name "$branch_name" --description "Environment for PR"
+          aws amplify create-deployment --app-id "$amplifyAppId" --branch-name "$branch_name" --description "Initial Deployment for PR"
+        env:
+          AWS_DEFAULT_REGION: us-east-1
