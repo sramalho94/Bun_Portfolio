@@ -34,6 +34,7 @@ jobs:
         run: |
           chmod +x ./install_amplify_cli.sh
           ./install_amplify_cli.sh
+          amplify init
         env:
           AWS_DEFAULT_REGION: us-east-1
 
