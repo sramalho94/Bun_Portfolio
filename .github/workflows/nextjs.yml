@@ -42,8 +42,9 @@ jobs:
         id: create_app
         run: |
           app_name="${{ github.event.pull_request.head.ref }}"
-          amplifyAppId=$(aws amplify create-app --name "$app_name" --output json --query 'App.Id' | tr -d '"')
-          echo "::set-output name=amplify_app_id::$amplifyAppId"
+          amplifyAppArn=$(aws amplify create-app --name "$app_name" --output json --query 'App.Id')
+          amplify_app_id="${amplifyAppArn##*/}" # Extract the app ID from the ARN
+          echo "::set-output name=amplify_app_id::$amplify_app_id"
         env:
           AWS_DEFAULT_REGION: us-east-1
 
