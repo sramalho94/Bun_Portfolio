@@ -40,24 +40,16 @@ jobs:
         id: create_app
         run: |
           app_name="${{ github.event.pull_request.head.ref }}"
-          aws amplify create-app --name "$app_name"
+          amplifyAppId=$(aws amplify create-app --name "$app_name" --output json --query AppId)
+          echo "::set-output name=amplify_app_id::$amplifyAppId"
         env:
           AWS_DEFAULT_REGION: us-east-1
-        continue-on-error: true
 
   environment_creation:
     needs: app_creation
     runs-on: ubuntu-latest
 
     steps:
-      - name: Get Repository URL
-        id: get_repo_url
-        run: |
-          # Here you should fetch the repository URL and set it as an output
-          # Example: REPO_URL=$(curl -s https://api.github.com/repos/your-repo-name | jq -r .ssh_url)
-          echo "Repository URL fetched"
-          echo "::set-output name=repository_url::REPO_URL"
-        
       - name: Configure AWS CLI
         run: |
           aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -69,8 +61,10 @@ jobs:
 
       - name: Create AWS Amplify Environment
         run: |
-          repository_url="${{ steps.get_repo_url.outputs.repository_url }}"
-          aws amplify create-branch --app-id ${{ steps.create_app.outputs.AppId }} --branch-name ${{ github.event.pull_request.head.ref }} --description "Environment for PR"
-          aws amplify create-deployment --app-id ${{ steps.create_app.outputs.AppId }} --branch-name ${{ github.event.pull_request.head.ref }} --description "Initial Deployment for PR"
+          amplifyAppId="${{ steps.create_app.outputs.amplify_app_id }}"
+          branch_name="${{ github.event.pull_request.head.ref }}"
+          repo_url="https://github.com/sramalho94/Bun_Portfolio/$branch_name"
+          aws amplify create-branch --app-id "$amplifyAppId" --branch-name "$branch_name" --description "Environment for PR"
+          aws amplify create-deployment --app-id "$amplifyAppId" --branch-name "$branch_name" --description "Initial Deployment for PR"
         env:
           AWS_DEFAULT_REGION: us-east-1
