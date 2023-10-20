@@ -1,5 +1,5 @@
 'use client'
-
+// imports
 import { useState, useRef } from 'react'
 import Navbar from '@/components/Navbar'
 import SkillsSection from '@/components/SkillsSection'
