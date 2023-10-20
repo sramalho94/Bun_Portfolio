@@ -41,6 +41,7 @@ jobs:
         run: |
           app_name="${{ github.event.pull_request.head.ref }}"
           amplifyAppId=$(aws amplify create-app --name "$app_name" --output json --query 'App.Id' | tr -d '"')
+          echo "Amplify App ID: $amplifyAppId"
           echo "::set-output name=amplify_app_id::$amplifyAppId"
         env:
           AWS_DEFAULT_REGION: us-east-1
@@ -61,9 +62,8 @@ jobs:
 
       - name: Create AWS Amplify Environment
         run: |
-          amplifyAppId="${{ steps.create_app.outputs.amplify_app_id }}"
+          amplifyAppId="${{ needs.app_creation.outputs.amplify_app_id }}"
           branch_name="${{ github.event.pull_request.head.ref }}"
-          repo_url="https://github.com/sramalho94/Bun_Portfolio/$branch_name"
           aws amplify create-branch --app-id "$amplifyAppId" --branch-name "$branch_name" --description "Environment for PR"
           aws amplify create-deployment --app-id "$amplifyAppId" --branch-name "$branch_name" --description "Initial Deployment for PR"
         env:
