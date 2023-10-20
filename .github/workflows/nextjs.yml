@@ -8,7 +8,6 @@ on:
 jobs:
   app_creation:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -40,11 +39,8 @@ jobs:
         id: create_app
         run: |
           app_name="${{ github.event.pull_request.head.ref }}"
-          amplifyAppId=$(aws amplify create-app --name "$app_name" --output json)
-          echo "Amplify App creation response: $amplifyAppId"
-          amplifyAppId=$(echo "$amplifyAppId" | jq -r '.App.Id')
-          echo "Amplify App ID: $amplifyAppId"
-          echo "::set-output name=amplify_app_id::$amplifyAppId"
+          amplifyAppId=$(aws amplify create-app --name "$app_name" --output json --query 'App.Id' | tr -d '"')
+          echo "::set-env name=AMPLIFY_APP_ID::$amplifyAppId"
         env:
           AWS_DEFAULT_REGION: us-east-1
 
@@ -62,9 +58,16 @@ jobs:
         env:
           AWS_DEFAULT_REGION: us-east-1
 
+      - name: Get Amplify App ID
+        run: |
+          amplifyAppId=$AMPLIFY_APP_ID
+          echo "Amplify App ID: $amplifyAppId"
+        env:
+          AMPLIFY_APP_ID: ${{ needs.app_creation.outputs.AMPLIFY_APP_ID }}
+
       - name: Create AWS Amplify Environment
         run: |
-          amplifyAppId="${{ steps.create_app.outputs.amplify_app_id }}"
+          amplifyAppId="${{ needs.app_creation.outputs.AMPLIFY_APP_ID }}"
           branch_name="${{ github.event.pull_request.head.ref }}"
           repo_url="https://github.com/sramalho94/Bun_Portfolio/$branch_name"
           aws amplify create-branch --app-id "$amplifyAppId" --branch-name "$branch_name" --description "Environment for PR"
