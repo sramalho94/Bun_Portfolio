@@ -42,9 +42,9 @@ jobs:
       - name: Deploy to AWS Amplify
         run: |
           # Run amplify push to provision cloud resources
-          amplify push
+          aws amplify push
 
           # Run amplify publish to host the frontend app
-          amplify publish
+          aws amplify publish
         env:
           AWS_DEFAULT_REGION: us-east-1
