@@ -22,6 +22,11 @@ jobs:
       - name: Build with Next.js and Bun
         run: bun run build
 
+      - name: Configure Git User Identity
+        run: |
+          git config --global user.email "sramalho@fordham.edu"
+          git config --global user.name "Stephan D Ramalho"
+
       - name: Build and Deploy to GitHub Pages
         run: |
           npm run build
