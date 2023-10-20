@@ -40,6 +40,7 @@ jobs:
         id: create_app
         run: |
           app_name="${{ github.event.pull_request.head.ref }}"
+          # Make an API call to AWS Amplify to create the app and retrieve its ID
           amplifyAppId=$(aws amplify create-app --name "$app_name" --output json --query 'App.Id' | tr -d '"')
           echo "Amplify App ID: $amplifyAppId"
           echo "::set-output name=amplify_app_id::$amplifyAppId"
@@ -62,7 +63,7 @@ jobs:
 
       - name: Create AWS Amplify Environment
         run: |
-          amplifyAppId="${{ needs.app_creation.outputs.amplify_app_id }}"
+          amplifyAppId="${{ steps.create_app.outputs.amplify_app_id }}"
           branch_name="${{ github.event.pull_request.head.ref }}"
           aws amplify create-branch --app-id "$amplifyAppId" --branch-name "$branch_name" --description "Environment for PR"
           aws amplify create-deployment --app-id "$amplifyAppId" --branch-name "$branch_name" --description "Initial Deployment for PR"
