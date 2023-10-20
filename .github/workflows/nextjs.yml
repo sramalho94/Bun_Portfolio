@@ -29,6 +29,8 @@ jobs:
         run: |
           git config --global user.email "sramalho@fordham.edu"
           git config --global user.name "Stephan D Ramalho"
+
+          git config --global pull.rebase false
       
       - name: Fetch and pull changes in GitHub Actions
         run: |
