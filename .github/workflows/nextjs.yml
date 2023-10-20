@@ -1,5 +1,4 @@
-# Sample workflow for building and deploying a Next.js site to GitHub Pages for each branch
-name: Deploy Next.js site to GitHub Pages
+name: Deploy Next.js site to GitHub Pages with Bun
 
 on:
   pull_request:
@@ -13,11 +12,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: 14
 
       - name: Set up Bun
         uses: oven-sh/setup-bun@v1
@@ -37,8 +31,3 @@ jobs:
           git add .
           git commit -m "Deploy to GitHub Pages for PR: ${{ github.event.pull_request.number }}"
           git push -u origin ${{ github.event.pull_request.head.ref }}
-
-      - name: Create Pull Request Comment
-        run: |
-          curl -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -d '{"body": "Staging site deployed for this pull request: https://sramalho94.github.io/Bun_Portfolio/${{ github.event.pull_request.head.ref}}" }' "https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number}}/comments"
-
