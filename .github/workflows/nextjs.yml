@@ -1,5 +1,4 @@
-# Sample workflow for building and deploying a Next.js site to GitHub Pages for each branch
-name: Deploy Next.js site to GitHub Pages
+name: Deploy Next.js site to GitHub Pages with Bun
 
 on:
   pull_request:
@@ -9,29 +8,39 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: 14
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v1
 
-      - name: Install Dependencies
-        run: npm install
+      - name: Install Dependencies with Bun
+        run: bun install
 
-      - name: Build and Deploy to GitHub Pages
+      - name: Build with Next.js and Bun
+        run: bun run build
+
+      - name: Configure Git User Identity
         run: |
-          npm run build
-          npm run export
-          git checkout -B ${{ github.event.pull_request.head.ref }}
+          git config --global user.email "sramalho@fordham.edu"
+          git config --global user.name "Stephan D Ramalho"
+
+      - name: Create and Deploy to 'gh-pages' branch
+        run: |
+          # Create and switch to the 'gh-pages' branch
+          git checkout -b gh-pages
+
+          # Clear the contents of the 'gh-pages' branch
+          git rm -r .
+
+          # Copy the exported Next.js site files to the 'gh-pages' branch
           cp -r out/* .
+
+          # Add, commit, and push the changes to the 'gh-pages' branch
           git add .
           git commit -m "Deploy to GitHub Pages for PR: ${{ github.event.pull_request.number }}"
-          git push -u origin ${{ github.event.pull_request.head.ref }}
-
-      - name: Create Pull Request Comment
-        run: |
-          curl -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -d '{"body": "Staging site deployed for this pull request: https://sramalho94.github.io/Bun_Portfolio/${{ github.event.pull_request.head.ref}}" }' "https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number}}/comments"
-
+          git push -u origin gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
