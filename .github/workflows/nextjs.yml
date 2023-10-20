@@ -45,14 +45,6 @@ jobs:
         env:
           AWS_DEFAULT_REGION: us-east-1
 
-      - name: Deploy to AWS Amplify
-        run: |
-          branch_name="${{ github.event.pull_request.head.ref }}"
-          aws amplify create-branch --app-id $AMPLIFY_APP_ID --branch-name "$branch_name" --description "Environment for PR"
-          aws amplify create-deployment --app-id $AMPLIFY_APP_ID --branch-name "$branch_name" --description "Initial Deployment for PR"
-        env:
-          AWS_DEFAULT_REGION: us-east-1
-
       - name: Push Changes to AWS Amplify
         run: amplify push --yes
         env:
