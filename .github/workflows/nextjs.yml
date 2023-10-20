@@ -6,7 +6,7 @@ on:
       - opened
 
 jobs:
-  deploy:
+  app_creation:
     runs-on: ubuntu-latest
 
     steps:
@@ -36,33 +36,41 @@ jobs:
         env:
           AWS_DEFAULT_REGION: us-east-1
 
-      - name: Get Branch Name
-        id: get-branch-name
-        run: echo "::set-output name=branch_name::${{ github.head_ref }}"
-
       - name: Create AWS Amplify App
+        id: create_app
         run: |
-          app_name="${{ steps.get-branch-name.outputs.branch_name }}"
-          aws amplify create-app --name "$app_name" --envName "dev"
+          app_name="${{ github.event.pull_request.head.ref }}"
+          aws amplify create-app --name "$app_name"
         env:
           AWS_DEFAULT_REGION: us-east-1
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        continue-on-error: true
 
-      - name: Extract and Store App ID
-        id: extract-app-id
-        run: |
-          app_id=$(aws amplify list-apps --envName "dev" | jq -r '.[0].appId')
-          echo "::set-output name=app_id::$app_id"
-        env:
-          AWS_DEFAULT_REGION: us-east-1
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  environment_creation:
+    needs: app_creation
+    runs-on: ubuntu-latest
 
-      - name: Deploy to AWS Amplify
+    steps:
+      - name: Get Repository URL
+        id: get_repo_url
         run: |
-          aws amplify publish --appId "${{ steps.extract-app-id.outputs.app_id }}" --envName "dev" --wait
+          # Here you should fetch the repository URL and set it as an output
+          # Example: REPO_URL=$(curl -s https://api.github.com/repos/your-repo-name | jq -r .ssh_url)
+          echo "Repository URL fetched"
+          echo "::set-output name=repository_url::REPO_URL"
+        
+      - name: Configure AWS CLI
+        run: |
+          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws configure set default.region us-east-1
+          aws configure set default.output json
         env:
           AWS_DEFAULT_REGION: us-east-1
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Create AWS Amplify Environment
+        run: |
+          repository_url="${{ steps.get_repo_url.outputs.repository_url }}"
+          aws amplify create-branch --app-id ${{ steps.create_app.outputs.AppId }} --branch-name ${{ github.event.pull_request.head.ref }} --description "Environment for PR"
+          aws amplify create-deployment --app-id ${{ steps.create_app.outputs.AppId }} --branch-name ${{ github.event.pull_request.head.ref }} --description "Initial Deployment for PR"
+        env:
+          AWS_DEFAULT_REGION: us-east-1
