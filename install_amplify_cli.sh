@@ -1,7 +1,12 @@
 #!/bin/bash
 
-# Install the AWS Amplify CLI
-bun install -g @aws-amplify/cli
+echo "Installing the AWS Amplify CLI..."
+npm install -g @aws-amplify/cli
 
-# Configure the AWS Amplify CLI
-amplify configure
+if [ $? -eq 0 ]; then
+  echo "AWS Amplify CLI installed successfully."
+  amplify configure
+else
+  echo "Failed to install the AWS Amplify CLI."
+  exit 1
+fi
