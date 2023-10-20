@@ -30,12 +30,10 @@ jobs:
           git config --global user.email "sramalho@fordham.edu"
           git config --global user.name "Stephan D Ramalho"
 
-      - name: Configure AWS CLI
+      - name: Install and Configure AWS Amplify CLI
         run: |
-          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws configure set default.region us-east-1
-          aws configure set default.output json
+          chmod +x ./install_amplify_cli.sh
+          ./install_amplify_cli.sh
         env:
           AWS_DEFAULT_REGION: us-east-1
 
