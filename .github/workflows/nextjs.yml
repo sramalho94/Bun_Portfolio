@@ -36,20 +36,33 @@ jobs:
         env:
           AWS_DEFAULT_REGION: us-east-1
 
-      - name: Create and Deploy to 'gh-pages' branch
+      - name: Get Branch Name
+        id: get-branch-name
+        run: echo "::set-output name=branch_name::${{ github.head_ref }}"
+
+      - name: Create AWS Amplify App
         run: |
-          # Create and switch to the 'gh-pages' branch
-          git checkout -b gh-pages
-
-          # Clear the contents of the 'gh-pages' branch
-          git rm -r .
-
-          # Copy the exported Next.js site files to the 'gh-pages' branch
-          cp -r out/* .
-
-          # Add, commit, and push the changes to the 'gh-pages' branch
-          git add .
-          git commit -m "Deploy to GitHub Pages for PR: ${{ github.event.pull_request.number }}"
-          git push -u origin gh-pages
+          app_name="${{ steps.get-branch-name.outputs.branch_name }}"
+          aws amplify create-app --name "$app_name" --envName "dev"
         env:
-          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          AWS_DEFAULT_REGION: us-east-1
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Extract and Store App ID
+        id: extract-app-id
+        run: |
+          app_id=$(aws amplify list-apps --envName "dev" | jq -r '.[0].appId')
+          echo "::set-output name=app_id::$app_id"
+        env:
+          AWS_DEFAULT_REGION: us-east-1
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Deploy to AWS Amplify
+        run: |
+          aws amplify publish --appId "${{ steps.extract-app-id.outputs.app_id }}" --envName "dev" --wait
+        env:
+          AWS_DEFAULT_REGION: us-east-1
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
