@@ -30,6 +30,19 @@ jobs:
           git config --global user.email "sramalho@fordham.edu"
           git config --global user.name "Stephan D Ramalho"
 
+      - name: Install and Configure Amplify CLI
+        run: |
+          # Install the Amplify CLI using Bun
+          bun add @aws-amplify/cli
+        
+          # Configure the AWS Amplify CLI
+          echo "y" | bun run amplify configure
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: us-east-1
+        
+
       - name: Configure AWS CLI
         run: |
           aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
