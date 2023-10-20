@@ -30,24 +30,21 @@ jobs:
           git config --global user.email "sramalho@fordham.edu"
           git config --global user.name "Stephan D Ramalho"
 
-      - name: Install and Configure AWS Amplify CLI
+      - name: Configure AWS CLI
         run: |
-          chmod +x ./install_amplify_cli.sh
-          ./install_amplify_cli.sh
-        env:
-          AWS_DEFAULT_REGION: us-east-1
-
-      - name: Get Amplify App ID
-        run: |
-          chmod +x ./get_amplify_app_id.sh
-          ./get_amplify_app_id.sh
+          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws configure set default.region us-east-1
+          aws configure set default.output json
         env:
           AWS_DEFAULT_REGION: us-east-1
 
       - name: Deploy to AWS Amplify
         run: |
-          branch_name="${{ github.event.pull_request.head.ref }}"
-          amplify create-branch --app-id $AMPLIFY_APP_ID --branch-name "$branch_name" --description "Environment for PR"
-          amplify create-deployment --app-id $AMPLIFY_APP_ID --branch-name "$branch_name" --description "Initial Deployment for PR"
+          # Run amplify push to provision cloud resources
+          amplify push
+
+          # Run amplify publish to host the frontend app
+          amplify publish
         env:
           AWS_DEFAULT_REGION: us-east-1
