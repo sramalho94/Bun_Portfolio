@@ -52,3 +52,13 @@ jobs:
           aws amplify create-deployment --app-id $AMPLIFY_APP_ID --branch-name "$branch_name" --description "Initial Deployment for PR"
         env:
           AWS_DEFAULT_REGION: us-east-1
+
+      - name: Push Changes to AWS Amplify
+        run: amplify push --yes
+        env:
+          AWS_DEFAULT_REGION: us-east-1
+
+      - name: Publish to AWS Amplify
+        run: amplify publish --yes
+        env:
+          AWS_DEFAULT_REGION: us-east-1
