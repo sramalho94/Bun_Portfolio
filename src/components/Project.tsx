@@ -9,7 +9,8 @@ import {
   SiPostgresql,
   SiReact,
   SiTailwindcss,
-  SiTypescript
+  SiTypescript,
+  SiSanity
 } from 'react-icons/si'
 import { FaAws } from 'react-icons/fa'
 import { IoLogoHtml5, IoLogoNodejs } from 'react-icons/io'
@@ -43,7 +44,8 @@ const Project: React.FC<ProjectProps> = ({
     next: <SiNextdotjs className="text-4xl text-center mx-auto pr-3" />,
     aws: <FaAws className="text-4xl text-center mx-auto pr-3" />,
     html: <IoLogoHtml5 className="text-4xl text-center mx-auto pr-3" />,
-    typescript: <SiTypescript className="text-4xl text-center mx-auto pr-3" />
+    typescript: <SiTypescript className="text-4xl text-center mx-auto pr-3" />,
+    sanity: <SiSanity className="text-4xl text-center mx-auto pr-3" />
   }
 
   return (
