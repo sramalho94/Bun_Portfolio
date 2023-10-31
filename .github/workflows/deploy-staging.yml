@@ -22,6 +22,9 @@ jobs:
       - name: Build the Next.js app
         run: bun run build
 
+      - name: Install Amplify CLI
+        run: bun install -g @aws-amplify/cli
+
       - name: Deploy to AWS Amplify
         run: |
           bunx amplify configure
