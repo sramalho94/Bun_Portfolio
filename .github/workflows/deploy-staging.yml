@@ -25,15 +25,16 @@ jobs:
       - name: Install Amplify CLI
         run: bun install -g @aws-amplify/cli
 
-      - name: Initialize Amplify project
-        run: bunx amplify init
-        continue-on-error: true
-
-      - name: Deploy to AWS Amplify
+      - name: Set up AWS credentials
         run: |
-          bunx amplify configure
-          bunx amplify publish
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: us-east-1 
+          echo $AWS_ACCESS_KEY_ID | amplify configure set accessKeyId
+          echo $AWS_SECRET_ACCESS_KEY | amplify configure set secretAccessKey
+          echo "us-east-2" | amplify configure set region
+
+      - name: Set Amplify project name
+        run: |
+          branch_name="${{ github.head_ref }}"
+          amplify init --app-name $branch_name --yes
+
+      - name: Deploy to Amplify
+        run: amplify publish
