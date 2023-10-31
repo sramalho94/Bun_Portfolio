@@ -25,6 +25,10 @@ jobs:
       - name: Install Amplify CLI
         run: bun install -g @aws-amplify/cli
 
+      - name: Initialize Amplify project
+        run: bunx amplify init
+        continue-on-error: true
+
       - name: Deploy to AWS Amplify
         run: |
           bunx amplify configure
