@@ -37,10 +37,9 @@ jobs:
             echo "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY" >> $GITHUB_ENV
             echo "AWS_REGION=us-east-2" >> $GITHUB_ENV
   
-      - name: Set Amplify project name
+      - name: Initialize Amplify project
         run: |
-            branch_name="${{ github.head_ref }}"
-            amplify init --app-name $branch_name
+            amplify init --providers awscloudformation
   
       - name: Deploy to Amplify
         run: amplify publish
