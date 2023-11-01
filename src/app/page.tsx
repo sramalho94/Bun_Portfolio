@@ -39,7 +39,7 @@ export default function Home() {
 
   return (
     <div className={darkMode ? 'dark' : ''}>
-      <main className="bg-purple-200 px-10 md:px-20 lg:px-40 dark:bg-gray-900">
+      <main className="bg-purple-500 px-10 md:px-20 lg:px-40 dark:bg-gray-900">
         {/* Nav Section */}
         <Navbar
           handleClickScroll={handleClickScroll}
