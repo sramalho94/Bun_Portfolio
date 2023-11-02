@@ -3,7 +3,7 @@ name: Markdown Component Check
 on:
   pull_request:
     branches:
-      - main
+      - staging
 
 jobs:
   check_markdown_components:
@@ -23,12 +23,18 @@ jobs:
           "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}" \
           | jq -r '.head.ref')
 
+      - name: Fetich Opening Branch
+        run: |
           # Fetch the branch opening the PR
           git fetch origin $OPENING_BRANCH:$OPENING_BRANCH
 
+      - name: Find Changed files
+        run: |
           # Find files changed in the PR
           PR_FILES=$(git diff --name-only main $OPENING_BRANCH)
 
+      - name: Search for Markdown components
+        run: |
           # Use grep to search for Material-UI Markdown components in changed files
           MUI_MARKDOWN_FOUND=0
           for file in $PR_FILES; do
