@@ -13,27 +13,32 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
 
-      - name: Fetch Main Branch
-        run: git fetch origin main:main
-
       - name: Determine Opening Branch
         run: |
           # Determine the branch opening the PR using GitHub API
-          OPENING_BRANCH=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          OPENING_BRANCH=$(curl -s -H "Authorization: token ${{ secrets.ACCESS_TOKEN }}" \
           "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}" \
           | jq -r '.head.ref')
 
           # Fetch the branch opening the PR
           git fetch origin $OPENING_BRANCH:$OPENING_BRANCH
 
-          # Find files changed in the PR
+          # Check if MuiMarkdown components are used in added/changed code
           PR_FILES=$(git diff --name-only main $OPENING_BRANCH)
+          MUI_MARKDOWN_FOUND=0
 
-          # Use grep to search for Material-UI Markdown components in changed files
-          if echo "$PR_FILES" | xargs grep -l 'MuiMarkdown' ; then
-            echo "Material-UI markdown components found in code changes. Rejecting PR."
+          for file in $PR_FILES; do
+            # Exclude .yaml files from the search
+            if [[ "$file" != *".yaml"* ]] && grep -q 'MuiMarkdown' "$file"; then
+              MUI_MARKDOWN_FOUND=1
+              break
+            fi
+          done
+
+          if [ $MUI_MARKDOWN_FOUND -eq 1 ]; then
+            echo "Material-UI markdown components found in added/changed code. Rejecting PR."
             exit 1
           fi
         env:
-          GITHUB_TOKEN: ${{ secrets.ACESS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         shell: bash
