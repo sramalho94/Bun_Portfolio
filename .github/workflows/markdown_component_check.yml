@@ -15,8 +15,8 @@ jobs:
 
       - name: Check for Markdown Components
         run: |
-          # Set the base branch reference
-          BASE_BRANCH=refs/heads/main
+          # Set the base branch reference to origin/main
+          BASE_BRANCH=origin/main
 
           # Find files changed in the PR
           PR_FILES=$(git diff --name-only $BASE_BRANCH ${{ github.head_ref }})
