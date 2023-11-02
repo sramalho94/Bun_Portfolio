@@ -24,7 +24,7 @@ jobs:
 
           # Find files changed in the PR
           PR_FILES=$(git diff --name-only $BASE_BRANCH ${{ github.head_ref }})
-          
+
           # Use grep to search for Material-UI Markdown components in changed files
           if echo "$PR_FILES" | xargs grep -l 'MuiMarkdown' ; then
             echo "Material-UI markdown components found in code changes. Rejecting PR."
