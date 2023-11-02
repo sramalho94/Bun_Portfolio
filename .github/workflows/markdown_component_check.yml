@@ -15,8 +15,15 @@ jobs:
 
       - name: Check for Markdown Components
         run: |
-          # Set the base branch reference to origin/main
-          BASE_BRANCH=origin/main
+          # Determine the base branch based on the pull request action
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            BASE_BRANCH=${{ github.base_ref }}
+          else
+            BASE_BRANCH="main"
+          fi
+
+          # Fetch the branch to ensure it's available
+          git fetch origin $BASE_BRANCH:$BASE_BRANCH
 
           # Find files changed in the PR
           PR_FILES=$(git diff --name-only $BASE_BRANCH ${{ github.head_ref }})
