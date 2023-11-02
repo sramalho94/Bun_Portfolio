@@ -13,9 +13,6 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
 
-      - name: Fetch Main Branch
-        run: git fetch origin main:main
-
       - name: Determine Opening Branch
         run: |
           # Determine the branch opening the PR using GitHub API
@@ -24,7 +21,7 @@ jobs:
           | jq -r '.head.ref')
 
           # Find files changed in the PR
-          PR_FILES=$(git diff --name-only main $OPENING_BRANCH)
+          PR_FILES=$(git diff --name-only main...$OPENING_BRANCH)
 
           # Use grep to search for Material-UI Markdown components in changed files
           if echo "$PR_FILES" | xargs grep -l 'MuiMarkdown' ; then
