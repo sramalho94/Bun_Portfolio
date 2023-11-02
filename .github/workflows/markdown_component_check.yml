@@ -13,24 +13,10 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
 
-      - name: Determine Branch
-        run: |
-          # Determine the base branch based on the pull request action
-          if [ "${{ github.event_name }}" == "pull_request" ]; then
-            BASE_BRANCH=${{ github.base_ref }}
-            OPENING_BRANCH=${{ github.head_ref }}
-          else
-            BASE_BRANCH="main"
-            OPENING_BRANCH="main"
-          fi
-          echo "BASE_BRANCH=$BASE_BRANCH" >> $GITHUB_ENV
-          echo "OPENING_BRANCH=$OPENING_BRANCH" >> $GITHUB_ENV
-        shell: bash
-
       - name: Check for Markdown Components
         run: |
           # Find files changed in the PR
-          PR_FILES=$(git diff --name-only $BASE_BRANCH $OPENING_BRANCH)
+          PR_FILES=$(git diff --name-only ${{ github.base_ref }} ${{ github.head_ref }})
 
           # Use grep to search for Material-UI Markdown components in changed files
           if echo "$PR_FILES" | xargs grep -l 'MuiMarkdown' ; then
