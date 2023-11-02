@@ -3,7 +3,7 @@ name: Markdown Component Check
 on:
   pull_request:
     branches:
-      - staging
+      - main
 
 jobs:
   check_markdown_components:
