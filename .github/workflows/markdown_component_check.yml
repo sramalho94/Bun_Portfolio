@@ -15,8 +15,11 @@ jobs:
 
       - name: Check for Markdown Components
         run: |
+          # Set the base branch reference
+          BASE_BRANCH=refs/heads/main
+
           # Find files changed in the PR
-          PR_FILES=$(git diff --name-only ${{ github.base_ref }} ${{ github.head_ref }})
+          PR_FILES=$(git diff --name-only $BASE_BRANCH ${{ github.head_ref }})
 
           # Use grep to search for Material-UI Markdown components in changed files
           if echo "$PR_FILES" | xargs grep -l 'MuiMarkdown' ; then
