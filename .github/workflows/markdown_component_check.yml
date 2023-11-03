@@ -38,11 +38,13 @@ jobs:
 
       - name: Find Changed files
         run: |
-          # Find files changed in the PR
-          PR_FILES=$(git diff --name-only main $OPENING_BRANCH)
-
-          # Set the environment variable to be used later
-          echo "PR_FILES=$PR_FILES" >> $GITHUB_ENV
+            # Find files changed in the PR
+            PR_FILES=$(git diff --name-only main $OPENING_BRANCH)
+        
+            # Set the environment variable to be used later
+            echo "PR_FILES=$PR_FILES" >> $GITHUB_ENV
+        env:
+            OPENING_BRANCH: ci3
 
       - name: Search for Markdown components
         run: |
