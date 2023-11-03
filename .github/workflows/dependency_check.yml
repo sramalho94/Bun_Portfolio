@@ -15,9 +15,6 @@ jobs:
         with:
           node-version: 14
 
-      - name: Set Working Directory
-        run: cd $GITHUB_WORKSPACE/Bun_Portfolio
-
       - name: Check for package.json file
         run: |
           if [ ! -f package.json ]; then
