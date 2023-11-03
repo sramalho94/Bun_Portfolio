@@ -15,8 +15,18 @@ jobs:
         with:
           node-version: 14
 
+      - name: Set Working Directory
+        run: cd $GITHUB_WORKSPACE
+
+      - name: Check for package.json file
+        run: |
+          if [ ! -f package.json ]; then
+            echo "No package.json found. Skipping dependency check."
+            exit 0
+          fi
+
       - name: Install Dependencies
-        run: npm install
+        run: npm ci
 
       - name: Check for Dependency Conflicts
         run: npm audit
@@ -36,6 +46,7 @@ jobs:
               repo: context.repo.repo,
               body: `PR has dependency issues:\n${issues}`,
             })
+
       - name: Check for Issues and Reject PR
         run: |
           if [ -s path/to/issues-file.txt ]; then
