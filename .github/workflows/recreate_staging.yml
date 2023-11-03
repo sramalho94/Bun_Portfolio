@@ -1,0 +1,26 @@
+name: Recreate Staging Branch
+
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+
+jobs:
+  recreate_staging:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Recreate Staging Branch
+        run: |
+          # Get the source branch name from the closed PR
+          source_branch=$(jq -r .pull_request.head.ref $GITHUB_EVENT_PATH)
+          git checkout main
+          git branch -f staging $source_branch
+          git push origin staging --force
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
