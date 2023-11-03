@@ -30,9 +30,13 @@ jobs:
       - name: Comment on PR with Issues
         id: comment
         run: |
-          echo "PR has dependency issues:"
-          cat audit-results.json
-          cat audit-warnings.json
+          auditResults=$(cat audit-results.json)
+          auditWarnings=$(cat audit-warnings.json)
+          if [ -n "$auditResults" ] || [ -n "$auditWarnings" ]; then
+            echo "PR has dependency issues:"
+            cat audit-results.json
+            cat audit-warnings.json
+          fi
         shell: bash
 
       - name: Check for Issues and Accept PR
