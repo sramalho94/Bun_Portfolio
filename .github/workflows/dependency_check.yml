@@ -1,4 +1,4 @@
-name: Dependency Check and Deploy
+name: Dependency Check
 
 on:
   pull_request:
@@ -20,12 +20,6 @@ jobs:
 
       - name: Install Dependencies
         run: npm install
-
-      - name: Build Next.js Project
-        run: npm run build
-
-      - name: Export Next.js Project as Static Files
-        run: npm run export
 
       - name: Check for Dependency Conflicts
         run: npm audit
