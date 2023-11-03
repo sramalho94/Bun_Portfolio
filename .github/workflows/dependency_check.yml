@@ -35,14 +35,14 @@ jobs:
           cat audit-warnings.json
         shell: bash
 
-      - name: Check for Issues and Reject PR
+      - name: Check for Issues and Accept PR
         run: |
           auditResults=$(cat audit-results.json)
           auditWarnings=$(cat audit-warnings.json)
-          if [ -z "$auditResults" ] && [ -z "$auditWarnings" ]; then
-            echo "No dependency issues found. PR is safe to merge."
-            exit 0
-          else
+          if [ -n "$auditResults" ] || [ -n "$auditWarnings" ]; then
             echo "Dependency issues found. Rejecting PR."
             exit 1
+          else
+            echo "No dependency issues found. PR is safe to merge."
           fi
+      
