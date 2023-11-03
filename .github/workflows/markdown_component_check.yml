@@ -10,6 +10,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+
       - name: Checkout Code
         uses: actions/checkout@v2
 
@@ -23,7 +28,10 @@ jobs:
           "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}" \
           | jq -r '.head.ref')
 
-      - name: Fetich Opening Branch
+          # Set the environment variable to be used later
+          echo "OPENING_BRANCH=$OPENING_BRANCH" >> $GITHUB_ENV
+
+      - name: Fetch Opening Branch
         run: |
           # Fetch the branch opening the PR
           git fetch origin $OPENING_BRANCH:$OPENING_BRANCH
@@ -32,6 +40,9 @@ jobs:
         run: |
           # Find files changed in the PR
           PR_FILES=$(git diff --name-only main $OPENING_BRANCH)
+
+          # Set the environment variable to be used later
+          echo "PR_FILES=$PR_FILES" >> $GITHUB_ENV
 
       - name: Search for Markdown components
         run: |
@@ -46,8 +57,16 @@ jobs:
 
           if [ $MUI_MARKDOWN_FOUND -eq 1 ]; then
             echo "Material-UI markdown components found in code changes. Rejecting PR."
-            exit 1
+            echo "::set-output name=pr_rejected::true" # Set an output parameter
+          else
+            echo "No Material-UI markdown components found in code changes. PR is safe to merge."
+            echo "::set-output name=pr_rejected::false" # Set an output parameter
           fi
-        env:
-          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-        shell: bash
+
+      - name: Set job summary
+        run: |
+          if [[ $pr_rejected == "true" ]]; then
+            echo "Material-UI markdown components found in code changes. Rejecting PR." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "No Material-UI markdown components found in code changes. PR is safe to merge." >> $GITHUB_STEP_SUMMARY
+          fi

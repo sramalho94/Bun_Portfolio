@@ -47,6 +47,7 @@ jobs:
             echo "Dependency issues found. Rejecting PR."
             exit 1
           fi
+          
       - name: Set results as environment variable
         run: |
           echo "DEPENDENCY_ISSUES=true" >> "$GITHUB_ENV"
