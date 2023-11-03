@@ -1,4 +1,4 @@
-name: Dependency Check
+name: Dependency Check and Deploy
 
 on:
   pull_request:
@@ -10,19 +10,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
-
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
           node-version: 14
+
+      - name: Checkout Code
+        uses: actions/checkout@v2
 
       - name: Install Dependencies
         run: npm install
 
       - name: Build Next.js Project
         run: npm run build
+
+      - name: Export Next.js Project as Static Files
+        run: npm run export
 
       - name: Check for Dependency Conflicts
         run: npm audit
