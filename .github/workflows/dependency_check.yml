@@ -29,20 +29,14 @@ jobs:
 
       - name: Check for Issues and Accept PR
         run: |
-          auditResults=$(cat audit-results.json)
-          auditWarnings=$(cat audit-warnings.json)
-          
-          # Check if there are actual issues
-          totalIssues=$(echo "$auditResults" | jq '.metadata.vulnerabilities.total + .metadata.dependencies.total')
-          
-          if [ "$totalIssues" -gt 0 ]; then
+          auditResults=$(jq -r '.metadata.vulnerabilities.total + .metadata.dependencies.total' audit-results.json)
+          if [ "$auditResults" -gt 0 ]; then
             echo "Dependency issues found. Rejecting PR."
             exit 1
           else
             echo "No dependency issues found. PR is safe to merge."
           fi
         shell: bash
-        env:
-          PATH: $PATH:/usr/local/bin # Add jq to the PATH
+      
       
       
