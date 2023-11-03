@@ -27,26 +27,22 @@ jobs:
       - name: Check for npm Warnings
         run: npm audit --json > audit-warnings.json || echo "{}"
 
-      - name: Comment on PR with Issues
-        id: comment
-        run: |
-          auditResults=$(cat audit-results.json)
-          auditWarnings=$(cat audit-warnings.json)
-          if [ -n "$auditResults" ] || [ -n "$auditWarnings" ]; then
-            echo "PR has dependency issues:"
-            cat audit-results.json
-            cat audit-warnings.json
-          fi
-        shell: bash
-
       - name: Check for Issues and Accept PR
         run: |
           auditResults=$(cat audit-results.json)
           auditWarnings=$(cat audit-warnings.json)
-          if [ -n "$auditResults" ] || [ -n "$auditWarnings" ]; then
+          
+          # Check if there are actual issues
+          totalIssues=$(echo "$auditResults" | jq '.metadata.vulnerabilities.total + .metadata.dependencies.total')
+          
+          if [ "$totalIssues" -gt 0 ]; then
             echo "Dependency issues found. Rejecting PR."
             exit 1
           else
             echo "No dependency issues found. PR is safe to merge."
           fi
+        shell: bash
+        env:
+          PATH: $PATH:/usr/local/bin # Add jq to the PATH
+      
       
