@@ -22,27 +22,27 @@ jobs:
         run: npm install
 
       - name: Check for Dependency Conflicts
-        run: npm audit
+        run: npm audit --json > audit-results.json || echo "{}"
 
       - name: Check for npm Warnings
-        run: npm audit
+        run: npm audit --json > audit-warnings.json || echo "{}"
 
       - name: Comment on PR with Issues
-        uses: actions/github-script@0.9.0
-        with:
-          script: |
-            const fs = require('fs');
-            const issues = fs.readFileSync('issues/issues-file.txt', 'utf-8');
-            github.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: `PR has dependency issues:\n${issues}`,
-            })
+        id: comment
+        run: |
+          echo "PR has dependency issues:"
+          cat audit-results.json
+          cat audit-warnings.json
+        shell: bash
 
       - name: Check for Issues and Reject PR
         run: |
-          if [ -s path/to/issues-file.txt ]; then
+          auditResults=$(cat audit-results.json)
+          auditWarnings=$(cat audit-warnings.json)
+          if [ -z "$auditResults" ] && [ -z "$auditWarnings" ]; then
+            echo "No dependency issues found. PR is safe to merge."
+            exit 0
+          else
             echo "Dependency issues found. Rejecting PR."
             exit 1
           fi
