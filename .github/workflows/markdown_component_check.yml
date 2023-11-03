@@ -27,22 +27,18 @@ jobs:
           OPENING_BRANCH=$(curl -s -H "Authorization: token ${{ secrets.ACCESS_TOKEN }}" \
           "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}" \
           | jq -r '.head.ref')
-
-          # Set the environment variable to be used later
           echo "OPENING_BRANCH=$OPENING_BRANCH" >> $GITHUB_ENV
-
-      - name: Fetch Opening Branch
-        run: |
+          
           # Fetch the branch opening the PR
           git fetch origin $OPENING_BRANCH:$OPENING_BRANCH
 
       - name: Find Changed files
         run: |
-            # Find files changed in the PR
-            PR_FILES=$(git diff --name-only main $OPENING_BRANCH)
+          # Find files changed in the PR
+          PR_FILES=$(git diff --name-only main $OPENING_BRANCH)
         
-            # Set the environment variable to be used later
-            echo "PR_FILES=$PR_FILES" >> $GITHUB_ENV
+          # Set the environment variable to be used later
+          echo "PR_FILES=$PR_FILES" >> $GITHUB_ENV
 
       - name: Search for Markdown components
         run: |
