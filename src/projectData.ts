@@ -9,7 +9,7 @@ interface Project {
 
 const projects: Project[] = [
   {
-    image: '/clearviction.png',
+    image: 'https://imgur.com/Cvneh0C.png',
     name: 'Clearviction',
     description: 'Clearviction is a Next.js-based web application designed to assist formerly incarcerated individuals in Washington State. My role within the Tech Foundations team involves leading the integration of a CI/CD pipeline for streamlined development and deployment. A significant focus of my contributions has been enhancing site accessibility by refactoring metadata, adding ARIA-labels, and image alt text. I actively engage in open-source collaboration by reviewing pull requests. This project reflects my commitment to using technology for social impact and inclusivity while maintaining high coding standards.',
     projectLink: 'https://clearviction.org/',
