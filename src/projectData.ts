@@ -17,7 +17,7 @@ const projects: Project[] = [
     technologies: ['aws', 'next', 'typescript', 'node', 'sanity', 'mui']
   },
   {
-    image: '/CommunityTestLab.png',
+    image: 'https://imgur.com/SQL2wpP.png',
     name: 'Community Test Lab',
     description:
       'As the Dev Lead for a 9-person team in The Opportunity Project 2023, I directed the development of a full-stack application for the Community Test Lab. This platform facilitates efficient Covid-19 test result reporting and provides a user-friendly data dashboard displaying key statistics. Implementing unit tests using Jest ensured the reliability of our Postgres Sequelize back-end, seamlessly integrated into our CI pipeline via Github Actions. Our React-native front-end, built with TypeScript and styled using Nativewindcss, promises a polished user experience. Deployment to AWS RDS and Elastic Beanstalk optimized performance, while our front-end awaits review for App Store and Google Play inclusion, reflecting our commitment to quality and innovation.',
@@ -42,7 +42,7 @@ const projects: Project[] = [
     technologies: ['aws', 'next', 'tailwind']
   },
   {
-    image: '/PokePro.png',
+    image: 'https://imgur.com/O3Z16WP.png',
     name: 'PokePro',
     description: `In this final project for General Assembly's Software Engineering Immersive, I made a full stack web application that allows users to look up trainers in the base pokemon games and see their pokemon team. Suggestions are given on how to beat each pokemon based on that Pokemon's type.`,
     projectLink: 'https://www.pokebattlepro.com/',
@@ -57,7 +57,7 @@ const projects: Project[] = [
     ]
   },
   {
-    image: '/faults2.png',
+    image: 'https://imgur.com/jAEjWka.png',
     name: 'The Faults In Our Stars',
     description: `The Faults In Our Stars is a hyper-personalized, social experience bringing astrology into the 22nd century. Our aim is to create social circles revolving around zodiac signs. This website will allow you to connect to people that are compatible to your zodiac sign and at the same time rate the users based on their personalities and sign compatibility; whether good or bad, create new social circles, that will improve your work and love life.`,
     projectLink: 'https://starz-app.herokuapp.com/',
@@ -82,7 +82,7 @@ const projects: Project[] = [
     ]
   },
   {
-    image: '/subwaysurfers.png',
+    image: 'https://imgur.com/2QvtQj1.png',
     name: 'Subway Surfers',
     description: `The Subway Surfers project is a full-stack MERN application designed to enable users to review the reliability and safety of New York City subway lines. Employing MongoDB, React.js, Node.js, and Express, the platform supports seamless CRUD operations through RESTful API calls and utilizes Mongoose for structuring MongoDB collections. The visually appealing user interface, designed with CSS3, includes a landing page displaying a navigation bar and submitted reviews. The navigation bar directs users to sign-up forms, review submission forms, and back to the landing page. Each review features buttons for easy deletion and updating, enhancing user experience. Subway Surfers provides an accessible platform for users to share insights on NYC subway lines' safety and reliability.`,
     projectLink: 'https://subway-surfers2022.herokuapp.com/',
