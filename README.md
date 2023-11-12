@@ -28,7 +28,7 @@
 ### Getting started with docker
 
 - run `docker pull sramalho94/bun_portfolio:latest`
-- run `docker run -p 3000:3000 --name sdrportfolio sramalho94/sdrportfolio:latest`
+- inside the root of the project direcotry run `docker-compose -f docker-compose.dev.yml up -d --build`
 - got to http://localhost:3000 to see the application
 
 ---
