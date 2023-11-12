@@ -40,6 +40,25 @@
 - Docker
 - Bun
 - TypeScript
+- AWS Amplify
+
+---
+
+### CI/CD Pipeline
+
+#### Workflows
+
+- Workflows are integrated using github actions
+
+  - `dependency_check.yml`
+
+    - checks for any dependency warnings, if there are warnings then the PR is rejected and the dependencies causing the warnings are listed in a automated comment on the PR
+
+#### Preview Builds
+
+- Branches that open Pull Requests to the `dev` branch are automatically deployed through `AWS Amplify Previews`
+
+---
 
 ## Links
 
