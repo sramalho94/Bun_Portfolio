@@ -46,7 +46,7 @@ const AboutMe = ({ showEmailForm, toggleEmailForm, darkMode }: Props) => {
           Web Developer
         </h3>
         <p className="text-lg py-5 leading-8 text-gray-800 md:text-xl mx-auto max-w-md dark:text-white">
-          A software engineer who loves collaboration, meeting goals, and always
+          I'm a software engineer who loves collaboration, meeting goals, and always
           learning new things. Born and raised New Yorker, so I love a good
           slice of pizza and the subway. (when it runs on time) I let my passion
           for gaming and computer building lead me down the path of software
