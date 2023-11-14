@@ -3,8 +3,8 @@ name: Set Default Reviewer
 
 on:
   pull_request:
-    types:
-      - opened
+    branches:
+      - dev
 
 jobs:
   set-default-reviewer:
