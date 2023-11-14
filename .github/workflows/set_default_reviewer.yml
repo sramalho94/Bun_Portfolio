@@ -1,0 +1,22 @@
+# .github/workflows/set_default_reviewer.yml
+name: Set Default Reviewer
+
+on:
+  pull_request:
+    types:
+      - opened
+
+jobs:
+  set-default-reviewer:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set Default Reviewer
+        run: |
+          REVIEWERS_FILE=".github/reviewers.yml"
+          DEFAULT_REVIEWER=$(cat $REVIEWERS_FILE | yq eval '.default_reviewers[0].username' -)
+          gh pr request-reviewers ${{ github.event.pull_request.number }} --reviewer $DEFAULT_REVIEWER
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
