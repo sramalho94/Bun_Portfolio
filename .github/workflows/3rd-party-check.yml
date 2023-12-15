@@ -49,54 +49,54 @@ jobs:
             echo "DEPENDENCY_CHANGE=true" >> $GITHUB_ENV
           fi
 
-          - name: Post Comment
-          if: ${{ env.DEPENDENCY_CHANGE == 'true' }}
-          uses: peter-evans/create-or-update-comment@v1
-          with:
-            issue-number: ${{ github.event.pull_request.number }}
-            body: |
-              ### New 3rd Party Dependency Justification
-              Changes in `package.json` or `package-lock.json` detected. Please fill out the form below to justify the inclusion of new 3rd party dependencies.
+      - name: Post Comment
+        if: ${{ env.DEPENDENCY_CHANGE == 'true' }}
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            ### New 3rd Party Dependency Justification
+            Changes in `package.json` or `package-lock.json` detected. Please fill out the form below to justify the inclusion of new 3rd party dependencies.
 
-              <!-- 3rd party dependency justification markdown form -->
-              **Problem statement:**  
-              - **Question:** What problem does using this package solve for us?  
-              - **Answer:**  
+            <!-- 3rd party dependency justification markdown form -->
+            **Problem statement:**  
+            - **Question:** What problem does using this package solve for us?  
+            - **Answer:**  
 
-              **Cost/subscription:**  
-              - **Question:** At this time, we will not accept any libraries that are paid.  
-              - **Answer:**  
+            **Cost/subscription:**  
+            - **Question:** At this time, we will not accept any libraries that are paid.  
+            - **Answer:**  
 
-              **Community:**  
-              - **Question:** Is there a robust community using this package?  
-              - **Answer:**  
+            **Community:**  
+            - **Question:** Is there a robust community using this package?  
+            - **Answer:**  
 
-              **Maintenance:**  
-              - **Question:** How often is the package updated?  
-              - **Answer:**  
+            **Maintenance:**  
+            - **Question:** How often is the package updated?  
+            - **Answer:**  
 
-              **Data privacy:**  
-              - **Question:** If our data will be processed through this tool, please verify that data is not being collected or sold.  
-              - **Answer:**  
+            **Data privacy:**  
+            - **Question:** If our data will be processed through this tool, please verify that data is not being collected or sold.  
+            - **Answer:**  
 
-              **Security:**  
-              - **Question:** Verify that the package does not install malicious code.  
-              - **Answer:**  
+            **Security:**  
+            - **Question:** Verify that the package does not install malicious code.  
+            - **Answer:**  
 
-              **Maintainability:**  
-              - **Question:** Does using this require a specialized skill set or have a steep learning curve?  
-              - **Answer:**  
+            **Maintainability:**  
+            - **Question:** Does using this require a specialized skill set or have a steep learning curve?  
+            - **Answer:**  
 
-              **Other options:**  
-              - **Question:** What other options have you considered?  
-              - **Answer:**  
+            **Other options:**  
+            - **Question:** What other options have you considered?  
+            - **Answer:**  
 
-              **Can we do it ourselves:**  
-              - **Question:** Why is an external solution better than a custom solution of our own?  
-              - **Answer:**  
+            **Can we do it ourselves:**  
+            - **Question:** Why is an external solution better than a custom solution of our own?  
+            - **Answer:**  
 
-              **Other notes:**  
-              - **Question:** Any other information you would like to share?  
-              - **Answer:**  
+            **Other notes:**  
+            - **Question:** Any other information you would like to share?  
+            - **Answer:**  
 
-              Please edit this comment to fill out the form. If you have no added a new 3rd party package, delete this comment
+            Please edit this comment to fill out the form. If you have no added a new 3rd party package, delete this comment
