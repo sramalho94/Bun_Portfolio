@@ -56,47 +56,20 @@ jobs:
           issue-number: ${{ github.event.pull_request.number }}
           body: |
             ### New 3rd Party Dependency Justification
-            Changes in `package.json` or `package-lock.json` detected. Please fill out the form below to justify the inclusion of new 3rd party dependencies.
+            Changes in `package.json` or `package-lock.json` detected. Please fill out the form below to justify the inclusion of new 3rd party dependencies. If no dependencies were added, delete this comment
 
             <!-- 3rd party dependency justification markdown form -->
-            **Problem statement:**  
-            - **Question:** What problem does using this package solve for us?  
-            - **Answer:**  
+            | Topic      | Questions/considerations | Answer |
+            | ----------- | ----------- | ----------- |
+            | **Problem statement** | What problem does using this package solve for us? | ** |
+            | **Cost/subscription** | At this time, we will not accept any libraries that are paid. | ** |
+            | **Community** | Is there a robust community using this package? | ** |
+            | **Maintenance** | How often is the package updated? | ** |
+            | **Data privacy** | If our data will be processed through this tool, please verify that data is not being collected or sold. | ** |
+            | **Security** | Verify that the package does not install malicious code. | ** |
+            | **Maintainability** | Does using this require a specialized skill set or have a steep learning curve? | ** |
+            | **Other options** | What other options have you considered? | ** |
+            | **Can we do it ourselves** | Why is an external solution better than a custom solution of our own? | ** |
+            | **Other notes** | Any other information you would like to share? | ** |
 
-            **Cost/subscription:**  
-            - **Question:** At this time, we will not accept any libraries that are paid.  
-            - **Answer:**  
-
-            **Community:**  
-            - **Question:** Is there a robust community using this package?  
-            - **Answer:**  
-
-            **Maintenance:**  
-            - **Question:** How often is the package updated?  
-            - **Answer:**  
-
-            **Data privacy:**  
-            - **Question:** If our data will be processed through this tool, please verify that data is not being collected or sold.  
-            - **Answer:**  
-
-            **Security:**  
-            - **Question:** Verify that the package does not install malicious code.  
-            - **Answer:**  
-
-            **Maintainability:**  
-            - **Question:** Does using this require a specialized skill set or have a steep learning curve?  
-            - **Answer:**  
-
-            **Other options:**  
-            - **Question:** What other options have you considered?  
-            - **Answer:**  
-
-            **Can we do it ourselves:**  
-            - **Question:** Why is an external solution better than a custom solution of our own?  
-            - **Answer:**  
-
-            **Other notes:**  
-            - **Question:** Any other information you would like to share?  
-            - **Answer:**  
-
-            Please edit this comment to fill out the form. If you have no added a new 3rd party package, delete this comment
+            Please edit this comment to fill out the form.
