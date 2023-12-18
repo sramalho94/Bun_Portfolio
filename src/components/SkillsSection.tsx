@@ -13,7 +13,8 @@ import {
   SiFlask,
   SiPostgresql,
   SiMongodb,
-  SiCss3
+  SiCss3,
+  SiAmazonaws
 } from 'react-icons/si'
 import { IoLogoNodejs, IoLogoPython, IoLogoHtml5 } from 'react-icons/io'
 import { RiVuejsFill } from 'react-icons/ri'
@@ -66,6 +67,10 @@ export default function SkillsSection({}: Props) {
         <li className="flex flex-col justify-center px-3">
           <SiSequelize className="text-4xl text-center mx-auto" />
           <p>SQL</p>
+        </li>
+        <li>
+          <SiAmazonaws className="text-4xl text-center mx-auto font-bold" />
+          <p>AWS</p>
         </li>
       </motion.ul>
 
