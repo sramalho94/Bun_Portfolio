@@ -21,7 +21,8 @@ const Portfolio = () => {
               image={project.image}
               description={project.description}
               projectLink={project.projectLink}
-              githubLink={project.githubLink}
+              githubLink={project.githubLinkFrontend}
+              githubBackend={project.githubLinkBackend}
               technologies={project.technologies}
             />
           </div>

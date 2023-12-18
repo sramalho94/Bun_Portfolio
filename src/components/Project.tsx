@@ -22,6 +22,7 @@ interface ProjectProps {
   description: string
   projectLink: string
   githubLink: string
+  githubBackend?: string
   technologies: string[]
 }
 
@@ -31,7 +32,8 @@ const Project: React.FC<ProjectProps> = ({
   description,
   projectLink,
   githubLink,
-  technologies
+  technologies,
+  githubBackend
 }) => {
   const techIcon: Record<string, JSX.Element> = {
     javascript: <SiJavascript className="text-4xl text-center mx-auto pr-3" />,
@@ -71,16 +73,28 @@ const Project: React.FC<ProjectProps> = ({
           rel="noopener noreferrer"
           className="mr-5 font-bold text-xl hover:scale-125 transition-all duration-300"
         >
-          Project Link
+          Project
         </a>
-        <a
-          href={githubLink}
-          className="mr-5 font-bold text-xl hover:scale-125 transition-all duration-300"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Github Link
-        </a>
+        <div className="flex flex-col">
+          <a
+            href={githubLink}
+            className="mr-5 font-bold text-xl hover:scale-125 transition-all duration-300 text-center"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Github
+          </a>
+          {githubBackend && (
+            <a
+              href={githubBackend}
+              className="mr-5 font-bold text-xl hover:scale-125 transition-all duration-300"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Github: Backend
+            </a>
+          )}
+        </div>
       </div>
       <div className="flex flex-col">
         <p className="text-xl font-bold pt-8 pb-2 text-center dark:text-white">
