@@ -44,8 +44,8 @@ jobs:
             PACKAGE_LOCK_JSON_CHANGED=true
           fi
 
-          echo "::set-output name=package_json_changed::$PACKAGE_JSON_CHANGED"
-          echo "::set-output name=package_lock_json_changed::$PACKAGE_LOCK_JSON_CHANGED"
+          echo "package_json_changed=$PACKAGE_JSON_CHANGED" >> $GITHUB_OUTPUT
+          echo "package_lock_json_changed=$PACKAGE_LOCK_JSON_CHANGED" >> $GITHUB_OUTPUT
 
       - name: Post Comment
         if: steps.dependency_check.outputs.package_json_changed == 'true' || steps.dependency_check.outputs.package_lock_json_changed == 'true'
