@@ -65,6 +65,7 @@ jobs:
             echo "comment_already_posted=true" >> $GITHUB_OUTPUT
           else
             echo "comment_already_posted=false" >> $GITHUB_OUTPUT
+          fi
 
       - name: Post Comment
         if: (steps.dependency_check.outputs.package_json_changed == 'true' || steps.dependency_check.outputs.package_lock_json_changed == 'true') && steps.check_comment.outputs.comment_already_posted == 'false'
