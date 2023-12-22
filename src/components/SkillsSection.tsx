@@ -70,6 +70,7 @@ export default function SkillsSection({}: Props) {
         </li>
         <li>
           <SiAmazonaws className="text-4xl text-center mx-auto font-bold" />
+          {/* Add comment */}
           <p>AWS</p>
         </li>
       </motion.ul>
